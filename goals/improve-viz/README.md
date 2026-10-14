@@ -28,9 +28,11 @@ flowchart TD
     TASK_001["TASK-001 Decomposition library: slopes to cash, shares and calls"]
     TASK_002["TASK-002 Butterfly widget: drag slope changes, see the calls"]
     TASK_003["TASK-003 Put-from-calls widget: stock + put = call + cash"]
+    TASK_004["TASK-004 General widget: any piecewise-linear payoff from cash, shares and calls"]
   end
   TASK_001 --> TASK_002
   TASK_001 --> TASK_003
+  TASK_001 --> TASK_004
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
