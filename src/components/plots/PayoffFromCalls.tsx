@@ -42,6 +42,8 @@ export interface PayoffFromCallsProps {
   showDisplayPicker?: boolean;
   showTable?: boolean;
   showReadout?: boolean;
+  /** Explain each slope jump as a signed call trade (for worked examples). */
+  showSlopeChangeExplanation?: boolean;
 }
 
 const DEFAULT_KINKS: readonly SlopeKink[] = [
@@ -63,6 +65,14 @@ function sortedKinks(input: readonly SlopeKink[]): SlopeKink[] {
 function signed(v: number): string {
   const rounded = Math.abs(v) < 1e-9 ? 0 : Number(v.toFixed(2));
   return (rounded > 0 ? '+' : rounded < 0 ? '−' : '') + String(Math.abs(rounded));
+}
+
+/** Translate the already-computed slope jump into a plain-English call trade. */
+function callInstruction(strike: number, quantity: number): string {
+  const size = Number(Math.abs(quantity).toFixed(2));
+  if (size === 0) return 'No call at $' + strike;
+  return (quantity > 0 ? 'Buy ' : 'Sell ') + size + ' × $' + strike +
+    (size === 1 ? ' call' : ' calls');
 }
 
 function newKinkPosition(kinks: readonly SlopeKink[], max: number): { strike: number; after: number } | null {
@@ -112,6 +122,7 @@ export default function PayoffFromCalls({
   showDisplayPicker = true,
   showTable = true,
   showReadout = true,
+  showSlopeChangeExplanation = false,
 }: PayoffFromCallsProps) {
   const presetKey = JSON.stringify(presetKinks);
   const [cash, setCash] = useState(f0);
@@ -334,6 +345,16 @@ export default function PayoffFromCalls({
 
   const readout = (
     <>
+      {showSlopeChangeExplanation && (
+        <div>
+          <p aria-label="Slope changes"><strong>Slope changes:</strong>{' '}
+            {decomposition.calls.map((call) => signed(call.quantity)).join(', ')}.
+          </p>
+          <p aria-label="Implied call positions"><strong>Implied calls:</strong>{' '}
+            {decomposition.calls.map((call) => callInstruction(call.strike, call.quantity)).join('; ')}.
+          </p>
+        </div>
+      )}
       {showTable && (
         <table className="iter-table" aria-label="Replicating cash, shares and calls" style={{ width: '100%' }}>
           <thead><tr>
@@ -379,7 +400,7 @@ export default function PayoffFromCalls({
         decomposition.cash + ' cash, ' + decomposition.shares + ' shares and ' +
         decomposition.calls.map((c) => signed(c.quantity) + ' calls at $' + c.strike).join(', ') + '.'}
       plotHeight={HEIGHT} plot={plot} controls={controls}
-      readout={showTable || showReadout || extraReadout ? readout : undefined} caption={caption}
+      readout={showTable || showReadout || showSlopeChangeExplanation || extraReadout ? readout : undefined} caption={caption}
     />
   );
 }
