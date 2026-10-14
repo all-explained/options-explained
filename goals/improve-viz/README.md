@@ -26,7 +26,9 @@ Assumption: two separate widgets (not one with a toggle), because the two exampl
 flowchart TD
   subgraph M_1["M-1 · Interactive worked examples"]
     TASK_001["TASK-001 Decomposition library: slopes to cash, shares and calls"]
+    TASK_002["TASK-002 Butterfly widget: drag slope changes, see the calls"]
   end
+  TASK_001 --> TASK_002
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
