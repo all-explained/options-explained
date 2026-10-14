@@ -31,6 +31,7 @@ flowchart TD
     TASK_004["TASK-004 General widget: any piecewise-linear payoff from cash, shares and calls"]
   end
   TASK_001 --> TASK_002
+  TASK_004 --> TASK_002
   TASK_001 --> TASK_003
   TASK_001 --> TASK_004
   classDef draft stroke-dasharray: 4 3

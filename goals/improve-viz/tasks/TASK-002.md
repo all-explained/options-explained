@@ -3,7 +3,7 @@ id: TASK-002
 title: 'Butterfly widget: drag slope changes, see the calls'
 milestone: M-1
 state: approved
-depends_on: [TASK-001]
+depends_on: [TASK-001, TASK-004]
 delivery: pr
 ---
 
