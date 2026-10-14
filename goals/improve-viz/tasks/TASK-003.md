@@ -3,7 +3,7 @@ id: TASK-003
 title: 'Put-from-calls widget: stock + put = call + cash'
 milestone: M-1
 state: approved
-depends_on: [TASK-001]
+depends_on: [TASK-001, TASK-004]
 delivery: pr
 ---
 
