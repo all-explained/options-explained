@@ -7,18 +7,24 @@ Replace the two static worked examples in the 'Any payoff from calls' section of
 
 ## Context, scope and non-goals
 
-<what exists today, what is included, what is explicitly out of scope>
+Today the section 'Any payoff from calls' in `src/content/chapters/05-strategies.mdx` states two examples as prose: the butterfly (slope changes +1, -2, +1 give buy 90 call, sell two 100 calls, buy 110 call) and a put from calls ((K-S)+ = K - S + (S-K)+, i.e. stock + put = call + cash). The existing `StrategyBuilder` shows legs, but not the slope-to-calls reading.
+
+In scope: a tested decomposition function in `src/lib/pricing/`, one widget per example built on `PlotFrame`/`WidgetFrame`, and embedding each in the chapter. Keep the prose and the pointer to Chapter 27.
+Out of scope: other chapters, new curriculum entries, changing StrategyBuilder.
+
+Assumption: two separate widgets (not one with a toggle), because the two examples teach different things.
 
 ## Risks and open questions
 
-<risks, assumptions, and unknowns; material unknowns become discovery tasks or DEC nodes>
+- The two widget PRs both edit the same bullet list in the chapter; the second to merge may need a small rebase.
+- Repo rules (CLAUDE.md) apply: colour tokens, `\\$` escaping, 360px width, seeded/reduced-motion, screenshots in both themes.
 
 ## Plan structure
 
 <!-- goal:graph:start -->
 ```mermaid
 flowchart TD
-  subgraph M_1["M-1 · <first observable outcome>"]
+  subgraph M_1["M-1 · Interactive worked examples"]
   end
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
