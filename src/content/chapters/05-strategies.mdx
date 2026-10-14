@@ -7,6 +7,7 @@ prerequisites: [2, 3]
 summary: "Snap calls, puts and stock together to build a payoff for almost any view of the market."
 ---
 import StrategyBuilder from '../../components/plots/StrategyBuilder';
+import PayoffFromCalls from '../../components/plots/PayoffFromCalls';
 import Callout from '../../components/ui/Callout.astro';
 import { Quiz, NumericQuiz } from '../../components/ui/Quiz';
 
@@ -149,6 +150,13 @@ $s_k - s_{k-1}$ to the slope, taking it from $s_{k-1}$ to $s_k$. So the slopes m
 sides are the same function.
 
 </details>
+
+<PayoffFromCalls client:visible title="Build any shape from calls" />
+
+<p class="try-this"><strong>Try this:</strong> drag the middle yellow kink, then change the slope to its right.
+The call quantity at that strike is the <em>change</em> in slope, not the slope itself. Switch to
+<em>Each term</em> to see the cash, stock, and calls separately; then use <em>Rebuild</em> and the
+running-sum slider to add them back one at a time.</p>
 
 Two examples:
 
