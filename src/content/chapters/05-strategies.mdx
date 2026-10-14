@@ -8,6 +8,7 @@ summary: "Snap calls, puts and stock together to build a payoff for almost any v
 ---
 import StrategyBuilder from '../../components/plots/StrategyBuilder';
 import PayoffFromCalls from '../../components/plots/PayoffFromCalls';
+import PutFromCalls from '../../components/plots/PutFromCalls';
 import SlopeToCalls from '../../components/plots/SlopeToCalls';
 import Callout from '../../components/ui/Callout.astro';
 import { Quiz, NumericQuiz } from '../../components/ui/Quiz';
@@ -174,6 +175,10 @@ Two examples:
   $$
   A put is cash $\Strike{K}$, minus one share, plus a call. Rearranged, *stock + put = call + cash*, which is why
   the protective put looked like a call. This is **put–call parity** at expiry, and Chapter 8 will price it.
+
+<PutFromCalls client:visible />
+
+<p class="try-this"><strong>Try this:</strong> start with strike \$100 and add the cash, short share, and call one by one. The final green sum lies on the dashed put. Move the strike, then switch to <em>Stock + put = call + cash</em> and notice that the two payoff lines still coincide.</p>
 
 The same idea, pushed to smooth payoffs with infinitely many tiny kinks, will let us read *probabilities* out of
 option prices in Chapter 27.
