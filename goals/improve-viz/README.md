@@ -30,7 +30,6 @@ flowchart TD
     TASK_003["TASK-003 Put-from-calls widget: stock + put = call + cash"]
     TASK_004["TASK-004 General widget: any piecewise-linear payoff from cash, shares and calls"]
   end
-  TASK_001 --> TASK_002
   TASK_004 --> TASK_002
   TASK_001 --> TASK_003
   TASK_004 --> TASK_003
