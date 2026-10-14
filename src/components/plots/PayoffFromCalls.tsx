@@ -1,5 +1,5 @@
 import { Line, MovablePoint, Point, Polyline } from 'mafs';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import {
   decomposeSlopes, evalDecomposition, evalDecompositionTerm,
   evalDecompositionTerms, evalPiecewiseSlopes, type SlopeKink,
@@ -10,7 +10,7 @@ import { useTweened } from './animation';
 import { clamp, niceTicks, signedMoney } from './format';
 import { Label, PlotFrame, Sub } from './PlotFrame';
 
-type View = 'rebuild' | 'terms' | 'payoff';
+type View = 'rebuild' | 'terms' | 'payoff' | 'comparison';
 
 export interface PayoffFromCallsProps {
   title?: string;
@@ -24,6 +24,15 @@ export interface PayoffFromCallsProps {
   initialSpot?: number;
   /** Initial view; can also be changed by a parent preset. */
   display?: View;
+  /** Add this many shares to both sides of the payoff identity. */
+  comparisonShares?: number;
+  showTermsInRebuild?: boolean;
+  targetColor?: string;
+  includedTerms?: number;
+  showStepSlider?: boolean;
+  onSpotChange?: (spot: number) => void;
+  extraControls?: ReactNode;
+  extraReadout?: ReactNode;
   lockEdits?: boolean;
   lockCash?: boolean;
   lockShares?: boolean;
@@ -86,6 +95,14 @@ export default function PayoffFromCalls({
   kinks: presetKinks = DEFAULT_KINKS,
   initialSpot = 105,
   display = 'rebuild',
+  comparisonShares = 0,
+  showTermsInRebuild = false,
+  targetColor = 'var(--text)',
+  includedTerms,
+  showStepSlider = true,
+  onSpotChange,
+  extraControls,
+  extraReadout,
   lockEdits = false,
   lockCash = false,
   lockShares = false,
@@ -122,15 +139,21 @@ export default function PayoffFromCalls({
 
   const decomposition = decomposeSlopes(cash, shares, bends);
   const count = 2 + decomposition.calls.length;
-  const shown = Math.min(included, count);
+  const shown = Math.max(0, Math.min(includedTerms ?? included, count));
   const original = (s: number) => evalPiecewiseSlopes(cash, shares, bends, s);
   const partial = (s: number) => evalDecompositionTerms(decomposition, s, shown);
+  // Comparison overlays an identical share position on each side.
+  const comparisonOriginal = (s: number) => original(s) + comparisonShares * s;
+  const comparisonRebuilt = (s: number) => evalDecomposition(decomposition, s) + comparisonShares * s;
+  const plotOriginal = view === 'comparison' ? comparisonOriginal : original;
   // Piecewise lines need only their breakpoints and endpoints to plot exactly.
   const xs = [0, ...bends.map((k) => k.strike), xMax];
   const allYs = [
     0, ...xs.map(original),
     ...(view === 'rebuild' ? xs.map(partial) : []),
-    ...(view === 'terms' ? Array.from({ length: count }, (_, i) =>
+    ...(view === 'comparison' ? [...xs.map(comparisonOriginal), ...xs.map(comparisonRebuilt)] : []),
+    ...(view === 'terms' || (view === 'rebuild' && showTermsInRebuild)
+      ? Array.from({ length: count }, (_, i) =>
       xs.map((s) => evalDecompositionTerm(decomposition, s, i))).flat() : []),
   ];
   const lo = Math.min(...allYs);
@@ -145,7 +168,13 @@ export default function PayoffFromCalls({
     && xs.slice(1).every((s, i) =>
       Math.abs(original((xs[i] + s) / 2) - evalDecomposition(decomposition, (xs[i] + s) / 2)) < 1e-8);
   const originalAtSpot = original(currentSpot);
+  const plottedAtSpot = plotOriginal(currentSpot);
   const partialAtSpot = partial(currentSpot);
+  const changeSpot = (next: number) => {
+    const value = Math.round(clamp(next, ...X));
+    setSpot(value);
+    onSpotChange?.(value);
+  };
   const isComplete = shown === count;
   const changeStrike = (index: number, strike: number) =>
     setBends((prior) => prior.map((b, i) => i === index ? { ...b, strike } : b));
@@ -168,29 +197,38 @@ export default function PayoffFromCalls({
         <Line.Segment key={'strike-' + i} point1={[k.strike, Y[0]]} point2={[k.strike, Y[1]]}
           color="var(--c-strike)" style="dashed" weight={1} opacity={0.4} />
       ))}
-      {view === 'terms' && Array.from({ length: count }, (_, i) => (
+      {(view === 'terms' || (view === 'rebuild' && showTermsInRebuild)) && Array.from({ length: count }, (_, i) => (
         <Polyline key={'term-' + i}
           points={xs.map((s) => [s, evalDecompositionTerm(decomposition, s, i)] as [number, number])}
           color={i === 0 ? 'var(--c-rate)' : i === 1 ? 'var(--c-spot)' : 'var(--c-call)'}
           weight={2} strokeStyle="dashed" strokeOpacity={0.72} fillOpacity={0} />
       ))}
-      <Polyline points={xs.map((s) => [s, original(s)] as [number, number])}
-        color="var(--text)" weight={3.5} strokeStyle="dashed" fillOpacity={0} />
+      {view === 'comparison' ? (
+        <>
+          <Polyline points={xs.map((s) => [s, comparisonRebuilt(s)] as [number, number])}
+            color="var(--c-call)" weight={4} fillOpacity={0} />
+          <Polyline points={xs.map((s) => [s, comparisonOriginal(s)] as [number, number])}
+            color="var(--c-put)" weight={3} strokeStyle="dashed" fillOpacity={0} />
+        </>
+      ) : (
+        <Polyline points={xs.map((s) => [s, original(s)] as [number, number])}
+          color={targetColor} weight={3.5} strokeStyle="dashed" fillOpacity={0} />
+      )}
       {view === 'rebuild' && (
         <Polyline points={xs.map((s) => [s, partial(s)] as [number, number])}
           color="var(--c-call)" weight={4} strokeOpacity={opacity} fillOpacity={0} />
       )}
-      <Line.Segment point1={[currentSpot, 0]} point2={[currentSpot, originalAtSpot]}
+      <Line.Segment point1={[currentSpot, 0]} point2={[currentSpot, plottedAtSpot]}
         color="var(--c-spot)" style="dashed" weight={1} opacity={0.75} />
-      <Label x={currentSpot} y={originalAtSpot} attach="nw" attachDistance={14}
-        color="var(--c-spot)" size={12}>{signedMoney(originalAtSpot)}</Label>
-      <MovablePoint point={[currentSpot, originalAtSpot]} color="var(--c-spot)"
-        onMove={([x]) => setSpot(Math.round(clamp(x, ...X)))}
-        constrain={([x]) => { const s = clamp(x, ...X); return [s, original(s)]; }} />
+      <Label x={currentSpot} y={plottedAtSpot} attach="nw" attachDistance={14}
+        color="var(--c-spot)" size={12}>{signedMoney(plottedAtSpot)}</Label>
+      <MovablePoint point={[currentSpot, plottedAtSpot]} color="var(--c-spot)"
+        onMove={([x]) => changeSpot(x)}
+        constrain={([x]) => { const s = clamp(x, ...X); return [s, plotOriginal(s)]; }} />
       {bends.map((k, i) => {
         const min = i === 0 ? MIN_STRIKE : bends[i - 1].strike + GAP;
         const max = i === bends.length - 1 ? xMax - MIN_STRIKE : bends[i + 1].strike - GAP;
-        const y = original(k.strike);
+        const y = plotOriginal(k.strike);
         return (
           <g key={'handle-' + i}>
             {canMoveStrikes && max > min ? (
@@ -213,6 +251,7 @@ export default function PayoffFromCalls({
   const controls = (
     <div className="strategy-controls">
       <div className="widget-controls">
+        {extraControls}
         {showDisplayPicker && (
           <Segmented label="Show decomposition" value={view} onChange={setView} options={[
             { value: 'rebuild', label: 'Rebuild', color: 'var(--c-call)' },
@@ -229,7 +268,122 @@ export default function PayoffFromCalls({
             onChange={setShares} format={signed} color="var(--c-spot)" />
         )}
         <Slider label="Inspect expiry price $S_T$" value={currentSpot} min={0} max={xMax}
-          onChange={setSpot} format={(v) => '$' + v} color="var(--c-spot)" />
+          onChange={changeSpot} format={(v) => '
+        {view === 'rebuild' && showStepSlider && (
+          <Slider label="Running sum: terms included" value={shown} min={0} max={count}
+            onChange={setIncluded} format={(v) => String(v) + ' / ' + count} color="var(--c-call)" />
+        )}
+      </div>
+      {(canMoveStrikes || canChangeSlopes || canChangeCount) && (
+        <>
+          <ol className="legs" aria-label="Payoff kinks">
+            {bends.map((k, i) => {
+              const min = i === 0 ? MIN_STRIKE : bends[i - 1].strike + GAP;
+              const max = i === bends.length - 1 ? xMax - MIN_STRIKE : bends[i + 1].strike - GAP;
+              const before = i === 0 ? shares : bends[i - 1].slopeAfter;
+              return (
+                <li className="leg" key={i} style={{ ['--leg' as string]: 'var(--c-strike)' }}>
+                  <span className="leg-name">
+                    Kink {i + 1}: strike {'$' + k.strike}; slope {signed(before)} to {signed(k.slopeAfter)};
+                    calls {signed(k.slopeAfter - before)}
+                  </span>
+                  <div className="leg-edit">
+                    {canMoveStrikes && max > min && (
+                      <Slider label={'Strike K' + (i + 1)} value={k.strike} min={min} max={max}
+                        onChange={(value) => changeStrike(i, value)}
+                        format={(value) => '$' + value} color="var(--c-strike)" />
+                    )}
+                    {canChangeSlopes && (
+                      <Slider label={'Slope after kink ' + (i + 1)} value={k.slopeAfter} min={-2} max={2} step={0.25}
+                        onChange={(value) => changeSlope(i, value)} format={signed} color="var(--c-call)" />
+                    )}
+                    {canChangeCount && (
+                      <Button disabled={bends.length <= 1} onClick={() => {
+                        setBends((current) => current.filter((_, j) => j !== i));
+                        setIncluded(count - 1);
+                      }}>Remove kink {i + 1}</Button>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+          {canChangeCount && (
+            <Button disabled={bends.length >= 5 || !proposal} onClick={() => {
+              if (!proposal) return;
+              setBends((current) => [...current, { strike: proposal.strike, slopeAfter: proposal.after + 0.5 }]
+                .sort((a, b) => a.strike - b.strike));
+              setIncluded(count + 1);
+            }}>+ Add kink ({bends.length} of 5)</Button>
+          )}
+        </>
+      )}
+    </div>
+  );
+
+  const rows = [
+    { name: 'Cash', quantity: signed(decomposition.cash), term: 'f(0)', color: 'var(--c-rate)' },
+    { name: 'Shares', quantity: signed(decomposition.shares), term: 's₀ × S', color: 'var(--c-spot)' },
+    ...decomposition.calls.map((c, i) => ({
+      name: 'Call at $' + c.strike,
+      quantity: signed(c.quantity),
+      term: '(s' + (i + 1) + ' − s' + i + ') × (S − ' + c.strike + ')⁺',
+      color: 'var(--c-call)',
+    })),
+  ];
+
+  const readout = (
+    <>
+      {showTable && (
+        <table className="iter-table" aria-label="Replicating cash, shares and calls" style={{ width: '100%' }}>
+          <thead><tr>
+            <th scope="col" style={{ textAlign: 'left' }}>Building block</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Payoff term</th>
+          </tr></thead>
+          <tbody>
+            {rows.map((row, i) => (
+              <tr key={i} style={{ color: row.color }}>
+                <td style={{ textAlign: 'left' }}>{row.name}</td>
+                <td>{row.quantity}</td>
+                <td>{row.term}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+      {showReadout && (
+        <div style={{ marginTop: showTable ? '0.65rem' : 0 }}>
+          <p>At <strong className="num" style={{ color: 'var(--c-spot)' }}>{'$' + currentSpot}</strong>: drawn payoff{' '}
+            <strong className="num">{signedMoney(originalAtSpot)}</strong>;{' '}
+            {isComplete ? 'rebuilt payoff' : 'partial sum'}{' '}
+            <strong className="num" style={{ color: 'var(--c-call)' }}>{signedMoney(partialAtSpot)}</strong>.
+          </p>
+          <p className="muted">
+            {view === 'rebuild' ? 'Running sum: ' + shown + ' of ' + count + ' terms. ' : ''}
+            {exact && isComplete
+              ? 'Exact match at every plotted price (and between kinks).'
+              : exact ? 'All terms together exactly reproduce the drawn payoff.' : 'Reconstruction mismatch — check the inputs.'}
+          </p>
+        </div>
+      )}
+      {extraReadout}
+    </>
+  );
+
+  return (
+    <WidgetFrame
+      title={title}
+      ariaLabel={'Payoff with ' + bends.length + ' kinks. The continuous piecewise line is ' +
+        (exact ? 'exactly reconstructed' : 'not reconstructed') + ' by ' +
+        decomposition.cash + ' cash, ' + decomposition.shares + ' shares and ' +
+        decomposition.calls.map((c) => signed(c.quantity) + ' calls at $' + c.strike).join(', ') + '.'}
+      plotHeight={HEIGHT} plot={plot} controls={controls}
+      readout={showTable || showReadout || extraReadout ? readout : undefined} caption={caption}
+    />
+  );
+}
+ + v} color="var(--c-spot)" />
         {view === 'rebuild' && (
           <Slider label="Running sum: terms included" value={shown} min={0} max={count}
             onChange={setIncluded} format={(v) => String(v) + ' / ' + count} color="var(--c-call)" />
