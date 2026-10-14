@@ -6,9 +6,10 @@ base: main
 success:
   SC-1: The butterfly example in chapter 05 is an interactive widget; verified by `npm run build` and `npm run screenshots 05` (no console, KaTeX or overflow errors) plus a Playwright click-through of its controls.
   SC-2: The put-from-calls example (put-call parity at expiry) is an interactive widget; verified the same way.
+  SC-4: The general theorem (any piecewise-linear payoff = cash + shares + calls) is an interactive widget in chapter 05, and both examples reuse it as special cases; verified by build, screenshots and a Playwright click-through.
   SC-3: The decomposition maths lives in src/lib with Vitest tests; verified by `npm test`.
 milestones:
-  - {id: M-1, title: Interactive worked examples, success: [SC-1, SC-2, SC-3], exit: Library and both widget PRs merged; chapter 05 builds and screenshots clean}
+  - {id: M-1, title: Interactive worked examples, success: [SC-1, SC-2, SC-3, SC-4], exit: Library, general widget and both example PRs merged; chapter 05 builds and screenshots clean}
 policy:
   decide: human         # human | experts (a committee answers worker decision requests)
   orchestrator: null    # {platform: codex, model: MODEL, effort: LEVEL}

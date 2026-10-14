@@ -9,14 +9,14 @@ Replace the two static worked examples in the 'Any payoff from calls' section of
 
 Today the section 'Any payoff from calls' in `src/content/chapters/05-strategies.mdx` states two examples as prose: the butterfly (slope changes +1, -2, +1 give buy 90 call, sell two 100 calls, buy 110 call) and a put from calls ((K-S)+ = K - S + (S-K)+, i.e. stock + put = call + cash). The existing `StrategyBuilder` shows legs, but not the slope-to-calls reading.
 
-In scope: a tested decomposition function in `src/lib/pricing/`, one widget per example built on `PlotFrame`/`WidgetFrame`, and embedding each in the chapter. Keep the prose and the pointer to Chapter 27.
+In scope: a tested decomposition function in `src/lib/pricing/`, one general widget for the theorem (TASK-004) plus the two examples as special cases of it, all built on `PlotFrame`/`WidgetFrame`, and embedding each in the chapter. Keep the prose and the pointer to Chapter 27.
 Out of scope: other chapters, new curriculum entries, changing StrategyBuilder.
 
-Assumption: two separate widgets (not one with a toggle), because the two examples teach different things.
+Assumption: the general widget comes first; the butterfly and the put are presets of it with example-specific narration, not separate plots.
 
 ## Risks and open questions
 
-- The two widget PRs both edit the same bullet list in the chapter; the second to merge may need a small rebase.
+- The three widget PRs both edit the same bullet list in the chapter; the second to merge may need a small rebase.
 - Repo rules (CLAUDE.md) apply: colour tokens, `\\$` escaping, 360px width, seeded/reduced-motion, screenshots in both themes.
 
 ## Plan structure
