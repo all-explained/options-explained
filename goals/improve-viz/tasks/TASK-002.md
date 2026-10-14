@@ -5,6 +5,7 @@ milestone: M-1
 state: approved
 depends_on: [TASK-004]
 delivery: pr
+route: {platform: chatgptweb}
 ---
 
 ## Why
