@@ -8,6 +8,7 @@ summary: "Snap calls, puts and stock together to build a payoff for almost any v
 ---
 import StrategyBuilder from '../../components/plots/StrategyBuilder';
 import PayoffFromCalls from '../../components/plots/PayoffFromCalls';
+import SlopeToCalls from '../../components/plots/SlopeToCalls';
 import Callout from '../../components/ui/Callout.astro';
 import { Quiz, NumericQuiz } from '../../components/ui/Quiz';
 
@@ -163,6 +164,9 @@ Two examples:
 - **The butterfly.** Its payoff starts flat ($s_0 = 0$), rises with slope $+1$ from 90 to 100, falls with slope
   $-1$ from 100 to 110, and is flat again after that. The slope changes are $+1$, $-2$, $+1$, so you buy one 90
   call, **sell two** 100 calls and buy one 110 call. That's exactly the preset.
+
+<SlopeToCalls client:visible />
+
 - **A put, from calls.** The payoff $(\Strike{K} - \Spot{S_T})^+$ starts at $f(0) = \Strike{K}$, has slope $-1$,
   and becomes flat after $\Strike{K}$, a slope change of $+1$. So
   $$
