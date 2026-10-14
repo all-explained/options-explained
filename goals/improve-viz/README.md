@@ -25,6 +25,7 @@ Assumption: two separate widgets (not one with a toggle), because the two exampl
 ```mermaid
 flowchart TD
   subgraph M_1["M-1 · Interactive worked examples"]
+    TASK_001["TASK-001 Decomposition library: slopes to cash, shares and calls"]
   end
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
