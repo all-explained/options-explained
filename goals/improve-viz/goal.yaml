@@ -12,7 +12,7 @@ milestones:
   - {id: M-1, title: Interactive worked examples, success: [SC-1, SC-2, SC-3, SC-4], exit: Library, general widget and both example PRs merged; chapter 05 builds and screenshots clean}
 policy:
   decide: human         # human | experts (a committee answers worker decision requests)
-  orchestrator: null    # {platform: codex, model: MODEL, effort: LEVEL}
+  orchestrator: {platform: claude, model: sonnet, effort: medium}    # {platform: codex, model: MODEL, effort: LEVEL}
   max_parallel: 7
   default_route: null   # {platform: codex, model: MODEL, effort: LEVEL}
   agent: claude         # claude | codex | opencode | agy
