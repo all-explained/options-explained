@@ -44,7 +44,7 @@ export default function PutFromCalls() {
         { value: 'pieces', label: 'Build the put', color: 'var(--c-put)' },
         { value: 'parity', label: 'Stock + put = call + cash', color: 'var(--c-call)' },
       ]} />
-      <Slider label="Strike $\\Strike{K}$" value={strike} min={50} max={150} step={5}
+      <Slider label="Strike $\Strike{K}$" value={strike} min={50} max={150} step={5}
         onChange={setStrike} format={(value) => '$' + value} color="var(--c-strike)" />
       {mode === 'pieces' && (
         <Slider label="Add building blocks" value={pieces} min={0} max={3}
