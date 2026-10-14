@@ -68,3 +68,44 @@ export function evalDecomposition(decomposition: Decomposition, s: number): numb
     decomposition.cash + decomposition.shares * s,
   );
 }
+
+
+/**
+ * Evaluate the payoff directly by integrating each piece's slope from zero.
+ * This deliberately does not use the cash/stock/call replication, allowing
+ * the teaching widget to compare the original line to an independent rebuild.
+ * Kinks are sorted without changing the caller's array.
+ */
+export function evalPiecewiseSlopes(f0: number, s0: number, kinks: readonly SlopeKink[], s: number): number {
+  let from = 0;
+  let value = f0;
+  let slope = s0;
+  for (const kink of [...kinks].sort((a, b) => a.strike - b.strike)) {
+    if (s <= kink.strike) break;
+    value += slope * (kink.strike - from);
+    from = kink.strike;
+    slope = kink.slopeAfter;
+  }
+  return value + slope * (s - from);
+}
+
+/** The individual expiry payoff of term 0 (cash), 1 (shares) or 2+ (calls). */
+export function evalDecompositionTerm(d: Decomposition, s: number, term: number): number {
+  if (!Number.isInteger(term) || term < 0 || term >= 2 + d.calls.length) {
+    throw new RangeError('Unknown decomposition term');
+  }
+  if (term === 0) return d.cash;
+  if (term === 1) return d.shares * s;
+  const call = d.calls[term - 2];
+  return call.quantity * Math.max(s - call.strike, 0);
+}
+
+/** Evaluate the running sum after including the first `count` terms. */
+export function evalDecompositionTerms(d: Decomposition, s: number, count: number): number {
+  if (!Number.isInteger(count) || count < 0 || count > 2 + d.calls.length) {
+    throw new RangeError('Term count must lie between zero and the number of terms');
+  }
+  let total = 0;
+  for (let i = 0; i < count; i++) total += evalDecompositionTerm(d, s, i);
+  return total;
+}
