@@ -47,16 +47,15 @@ export function breakevenPieces(
     if (slope === 0) {
       pieces.push({
         from, to, slope, profitAtFrom, candidate: null, valid: false,
-        status: Math.abs(profitAtFrom) <= ROOT_TOLERANCE
-          ? 'flat, zero everywhere' : 'flat, never zero',
+        status: profitAtFrom === 0 ? 'flat, zero everywhere' : 'flat, never zero',
       });
       return;
     }
 
     const candidate = from - profitAtFrom / slope;
     const valid = Number.isFinite(candidate)
-      && candidate >= from - ROOT_TOLERANCE
-      && candidate <= to + ROOT_TOLERANCE;
+      && candidate >= from
+      && candidate <= to;
     pieces.push({
       from, to, slope, profitAtFrom, candidate, valid,
       status: valid ? 'root' : 'outside piece',
@@ -82,14 +81,13 @@ export function breakevenPoints(
 ): number[] {
   const roots = breakevenPieces(f0, s0, kinks, netCost)
     .filter((piece) => piece.valid)
-    .map((piece) => {
-      const root = piece.candidate!;
-      // Canonicalize roots within floating-point tolerance of a shared kink.
-      if (Math.abs(root - piece.from) <= ROOT_TOLERANCE) return piece.from;
-      if (Number.isFinite(piece.to) && Math.abs(root - piece.to) <= ROOT_TOLERANCE) return piece.to;
-      return root;
-    })
+    .map((piece) => piece.candidate!)
     .sort((a, b) => a - b);
-
-  return roots.filter((root, index) => index === 0 || root - roots[index - 1] > ROOT_TOLERANCE);
+  const distinct: number[] = [];
+  for (const root of roots) {
+    if (distinct.length === 0 || root - distinct[distinct.length - 1] > ROOT_TOLERANCE) {
+      distinct.push(root);
+    }
+  }
+  return distinct;
 }
