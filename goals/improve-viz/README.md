@@ -33,11 +33,13 @@ flowchart TD
   subgraph M_2["M-2 · General breakevens"]
     TASK_005["TASK-005 Breakeven library: general per-piece rule for any piecewise-linear profit"]
     TASK_006["TASK-006 Chapter text: derive the general breakeven rule"]
+    TASK_007["TASK-007 Breakeven finder widget: solve each piece, see the roots"]
   end
   TASK_004 --> TASK_002
   TASK_004 --> TASK_003
   TASK_001 --> TASK_004
   TASK_005 --> TASK_006
+  TASK_006 --> TASK_007
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
