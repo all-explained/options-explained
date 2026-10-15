@@ -90,6 +90,7 @@ Use these symbols everywhere. If a chapter needs a new symbol, add it to this ta
 | $(x)^+$ | $\max(x, 0)$ |
 | $m$, $n$ | Contract multiplier (100 shares for US stock options) and number of contracts |
 | $n_i$, $p_i$ | Signed quantity of leg $i$ in a strategy (positive long, negative short) and its price per unit |
+| $A$, $s$ (Chapter 5 breakevens) | Left-hand stock-price anchor of a linear profit piece (zero or a strike), and profit slope on that piece. Elsewhere $s$ can mean quoted spread |
 | $b$, $a$ | Bid and ask prices (per share) |
 | $M$, $M_t$ | Mid-price $\tfrac12(b + a)$ (Part XI on). Not to be confused with the multiplier $m$ |
 | $s$ | Quoted spread $a - b$ (Part XI on). In Chapter 42, $s$ is a credit spread |
