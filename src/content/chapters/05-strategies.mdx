@@ -8,6 +8,7 @@ summary: "Snap calls, puts and stock together to build a payoff for almost any v
 ---
 import StrategyBuilder from '../../components/plots/StrategyBuilder';
 import PayoffFromCalls from '../../components/plots/PayoffFromCalls';
+import BreakevenFinder from '../../components/plots/BreakevenFinder';
 import PutFromCalls from '../../components/plots/PutFromCalls';
 import SlopeToCalls from '../../components/plots/SlopeToCalls';
 import Callout from '../../components/ui/Callout.astro';
@@ -181,6 +182,10 @@ $\Strike{100}$ call, sell a $\Strike{115}$ call, and pay a net debit of \$5.98.
   This is inside the piece, so the breakeven is **\$105.98**.
 - **Above 115**, both calls' slopes cancel. Profit stays at $15 - 5.98 = 9.02$, so this
   flat piece has no root.
+
+<BreakevenFinder client:visible />
+
+<p class="try-this"><strong>Try this:</strong> step through the pieces of the straddle, then choose the bull call spread and the butterfly. Increase the butterfly's net cost above its peak payoff: no piece can now cross zero, so there is <em>no breakeven</em>. Change a strike or slope and watch which candidate roots move inside or outside their pieces.</p>
 
 ### Any payoff from calls
 
