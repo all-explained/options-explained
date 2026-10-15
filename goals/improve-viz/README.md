@@ -31,6 +31,7 @@ flowchart TD
     TASK_004["TASK-004 General widget: any piecewise-linear payoff from cash, shares and calls"]
   end
   subgraph M_2["M-2 · General breakevens"]
+    TASK_005["TASK-005 Breakeven library: general per-piece rule for any piecewise-linear profit"]
   end
   TASK_004 --> TASK_002
   TASK_004 --> TASK_003
