@@ -125,17 +125,17 @@ consecutive strikes, profit is a straight line. Take one piece: call its left en
 $\Spot{A}$ (zero or a strike), and call its slope $s$. Moving the stock price away from that anchor
 changes profit by slope times distance:
 
-$
+$$
 \text{profit}(\Spot{S_T}) = \text{profit}(\Spot{A}) + s\,(\Spot{S_T} - \Spot{A}).
-$
+$$
 
 Set profit to zero and rearrange to find the candidate breakeven on that piece:
 
-$
+$$
 0 = \text{profit}(\Spot{A}) + s\,(\Spot{S_T^{*}} - \Spot{A})
 \quad\Longrightarrow\quad
 \Spot{S_T^{*}} = \Spot{A} - \frac{\text{profit}(\Spot{A})}{s}.
-$
+$$
 
 This works **only if $s \ne 0$** and the answer lies **inside that piece**, including its endpoints.
 A candidate outside the piece is not a breakeven there. If $s = 0$, the piece is flat: it either
@@ -160,9 +160,9 @@ $\Strike{K} - (\Call{C} + \Put{P})$. Above $\Strike{K}$, the call makes the slop
 At anchor $\Spot{A} = \Strike{K}$, profit is $-(\Call{C} + \Put{P})$, giving the upper root
 $\Strike{K} + (\Call{C} + \Put{P})$. Thus, when both candidates are valid:
 
-$
+$$
 \Spot{S_T^{*}} = \Strike{K} \pm (\Call{C} + \Put{P}).
-$
+$$
 
 The rule is not limited to symmetric strategies. Take the **bull call spread** above: buy a
 $\Strike{100}$ call, sell a $\Strike{115}$ call, and pay a net debit of \$5.98.
@@ -171,9 +171,9 @@ $\Strike{100}$ call, sell a $\Strike{115}$ call, and pay a net debit of \$5.98.
 - **From 100 to 115**, the payoff rises with slope $s = +1$. At anchor $\Spot{A} = 100$,
   profit is $-5.98$. The candidate is
 
-  $
+  $$
   \Spot{S_T^{*}} = \Strike{100} - \frac{-5.98}{+1} = 105.98.
-  $
+  $$
 
   This is inside the piece, so the breakeven is **\$105.98**.
 - **Above 115**, both calls' slopes cancel. Profit stays at $15 - 5.98 = 9.02$, so this
