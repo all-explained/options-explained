@@ -204,6 +204,15 @@ describe('flat segments and kink boundaries', () => {
     expect(breakevenPoints(0, 1, [{ strike: 0, slopeAfter: 2 }], 0)).toEqual([0]);
   });
 
+  it('does not accept a root just beyond a kink or label a nearly zero flat piece as zero', () => {
+    const kinks = [{ strike: 100, slopeAfter: 0 }];
+    const pieces = breakevenPieces(-100 - 5e-10, 1, kinks, 0);
+    expect(pieces[0].candidate).toBeGreaterThan(100);
+    expect(pieces[0]).toMatchObject({ valid: false, status: 'outside piece' });
+    expect(pieces[1]).toMatchObject({ valid: false, status: 'flat, never zero' });
+    expect(breakevenPoints(-100 - 5e-10, 1, kinks, 0)).toEqual([]);
+  });
+
   it('rejects non-finite cost and invalid kinks/initial values', () => {
     expect(() => breakevenPieces(0, 0, [], Infinity)).toThrow(RangeError);
     expect(() => breakevenPoints(NaN, 0, [], 0)).toThrow(RangeError);
