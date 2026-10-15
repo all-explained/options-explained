@@ -120,13 +120,67 @@ $$
 where $p_i$ is the price paid per unit today. The total $\sum_i n_i p_i$ is the **net cost**: positive is a
 *debit*, negative a *credit*.
 
-**Breakevens** are where the profit crosses zero. Because the profit is a straight line between consecutive
-strikes, each breakeven can be found by solving a linear equation on one piece. For a long straddle with
-total premium $\Call{C} + \Put{P}$:
+**Breakevens** are expiry stock prices where **profit**, not just payoff, is zero. Between two
+consecutive strikes, profit is a straight line. Take one piece: call its left endpoint the **anchor**
+$\Spot{A}$ (zero or a strike), and call its slope $s$. Moving the stock price away from that anchor
+changes profit by slope times distance:
+
+$$
+\text{profit}(\Spot{S_T}) = \text{profit}(\Spot{A}) + s\,(\Spot{S_T} - \Spot{A}).
+$$
+
+Set profit to zero and rearrange to find the candidate breakeven on that piece:
+
+$$
+\begin{aligned}
+0 &= \text{profit}(\Spot{A}) + s\,(\Spot{S_T^{*}} - \Spot{A}),\\
+\Spot{S_T^{*}} &= \Spot{A} - \frac{\text{profit}(\Spot{A})}{s}.
+\end{aligned}
+$$
+
+This works **only if $s \ne 0$** and the answer lies **inside that piece**, including its endpoints.
+For a bounded piece ending at $\Strike{K_{\text{next}}}$, that means
+$\Spot{A} \leq \Spot{S_T^*} \leq \Strike{K_{\text{next}}}$; the last piece has no upper bound.
+A candidate outside the piece is not a breakeven there. If $s = 0$, the piece is flat: it either
+never reaches zero or sits at zero everywhere. A root exactly at a shared strike counts only once.
+
+You can find the breakevens of **any** piecewise-linear strategy this way:
+
+1. **List the pieces** from stock price zero through every strike, including the final piece extending
+   above the highest strike.
+2. **Find the profit at each anchor** (zero and every kink): add the legs' payoffs there, then
+   subtract the strategy's net cost.
+3. **Check each piece.** On a bounded, non-flat piece, opposite profit signs at its two ends
+   guarantee one root in between; an endpoint already at zero also counts. Solve the equation
+   above for these pieces. On the final unbounded piece, solve directly because it has no right endpoint.
+4. **Keep only roots inside their own pieces** and count any shared-strike root once. A flat piece
+   at zero contains infinitely many breakeven prices, not one isolated root.
+
+For a **long straddle**, both options have strike $\Strike{K}$ and cost $\Call{C} + \Put{P}$ together.
+Below $\Strike{K}$, the put makes the profit slope $-1$. Starting at $\Spot{A} = 0$, profit is
+$\text{profit}(0) = \Strike{K} - (\Call{C} + \Put{P})$, so the rule gives the lower candidate
+$\Strike{K} - (\Call{C} + \Put{P})$. Above $\Strike{K}$, the call makes the slope $+1$.
+At anchor $\Spot{A} = \Strike{K}$, profit is $-(\Call{C} + \Put{P})$, giving the upper root
+$\Strike{K} + (\Call{C} + \Put{P})$. Thus, when both candidates are valid:
 
 $$
 \Spot{S_T^{*}} = \Strike{K} \pm (\Call{C} + \Put{P}).
 $$
+
+The rule is not limited to symmetric strategies. Take the **bull call spread** above: buy a
+$\Strike{100}$ call, sell a $\Strike{115}$ call, and pay a net debit of \$5.98.
+
+- **From 0 to 100**, both calls expire worthless: profit is $-5.98$, with slope $0$, so no root.
+- **From 100 to 115**, the payoff rises with slope $s = +1$. At anchor $\Spot{A} = 100$,
+  profit is $-5.98$. The candidate is
+
+  $$
+  \Spot{S_T^{*}} = \Strike{100} - \frac{-5.98}{+1} = 105.98.
+  $$
+
+  This is inside the piece, so the breakeven is **\$105.98**.
+- **Above 115**, both calls' slopes cancel. Profit stays at $15 - 5.98 = 9.02$, so this
+  flat piece has no root.
 
 ### Any payoff from calls
 
