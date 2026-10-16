@@ -36,6 +36,7 @@ flowchart TD
     TASK_007["TASK-007 Breakeven finder widget: solve each piece, see the roots"]
   end
   subgraph M_3["M-3 · Clearer breakevens"]
+    TASK_008["TASK-008 Drag-the-stock breakeven widget (replaces BreakevenFinder)"]
   end
   TASK_004 --> TASK_002
   TASK_004 --> TASK_003
