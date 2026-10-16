@@ -35,6 +35,8 @@ flowchart TD
     TASK_006["TASK-006 Chapter text: derive the general breakeven rule"]
     TASK_007["TASK-007 Breakeven finder widget: solve each piece, see the roots"]
   end
+  subgraph M_3["M-3 · Clearer breakevens"]
+  end
   TASK_004 --> TASK_002
   TASK_004 --> TASK_003
   TASK_001 --> TASK_004

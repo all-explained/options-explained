@@ -9,10 +9,12 @@ success:
   SC-4: The general theorem (any piecewise-linear payoff = cash + shares + calls) is an interactive widget in chapter 05, and both examples reuse it as special cases; verified by build, screenshots and a Playwright click-through.
   SC-5: A general breakeven rule for any piecewise-linear profit (not only the straddle) is tested in src/lib; verified by `npm test` against the straddle, bull call spread, butterfly and an off-centre case.
   SC-6: Chapter 05 states and derives the general breakeven rule, and an interactive widget lets the student find breakevens piece by piece; verified by `npm run build`, `npm run screenshots 05` (no console, KaTeX or overflow errors) plus a Playwright click-through.
+  SC-7: Chapter 05 teaches breakevens in place, under each strategy, with one plain-words rule and a one-idea drag-the-stock widget; the long derivation and the BreakevenFinder are gone; verified by `npm test`, `npm run build`, `npm run screenshots 05` (no console, KaTeX or overflow errors), a Playwright click-through, and the owner reading the section against the style guide voice.
   SC-3: The decomposition maths lives in src/lib with Vitest tests; verified by `npm test`.
 milestones:
   - {id: M-1, title: Interactive worked examples, success: [SC-1, SC-2, SC-3, SC-4], exit: Library, general widget and both example PRs merged; chapter 05 builds and screenshots clean}
   - {id: M-2, title: General breakevens, success: [SC-5, SC-6], exit: Breakeven library, chapter text and widget PRs merged; chapter 05 builds and screenshots clean}
+  - {id: M-3, title: Clearer breakevens, success: [SC-7], exit: Drag-the-stock widget, rewritten chapter text and cleanup PRs merged; chapter 05 builds and screenshots clean; owner approves how the section reads}
 policy:
   decide: human         # human | experts (a committee answers worker decision requests)
   orchestrator: {platform: claude, model: sonnet, effort: medium}    # {platform: codex, model: MODEL, effort: LEVEL}
