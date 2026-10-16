@@ -3,7 +3,7 @@ id: TASK-008
 title: Drag-the-stock breakeven widget (replaces BreakevenFinder)
 milestone: M-3
 state: approved
-depends_on: []
+depends_on: [DEC-001]
 delivery: pr
 ---
 

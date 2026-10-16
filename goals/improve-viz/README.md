@@ -36,6 +36,7 @@ flowchart TD
     TASK_007["TASK-007 Breakeven finder widget: solve each piece, see the roots"]
   end
   subgraph M_3["M-3 · Clearer breakevens"]
+    DEC_001{{"DEC-001 Does the GitHub Actions build check gate delivery, given CLAUDE.md says to ignore Actions?"}}
     TASK_008["TASK-008 Drag-the-stock breakeven widget (replaces BreakevenFinder)"]
     TASK_009["TASK-009 Chapter 05: teach breakevens in place, plain words"]
     TASK_010["TASK-010 Remove the old breakeven finder and its notation"]
@@ -45,11 +46,13 @@ flowchart TD
   TASK_001 --> TASK_004
   TASK_005 --> TASK_006
   TASK_006 --> TASK_007
+  DEC_001 --> TASK_008
   TASK_008 --> TASK_009
   TASK_009 --> TASK_010
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
+  class DEC_001 decision
 ```
 <!-- goal:graph:end -->
 
