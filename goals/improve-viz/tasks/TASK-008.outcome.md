@@ -16,3 +16,18 @@
 - **Environment.** Playwright's Chromium download timed out here; I symlinked the cached 1248 builds as `chromium-1243` / `chromium_headless_shell-1243` in `~/Library/Caches/ms-playwright` (outside the repo). No GitHub Actions were used.
 - **Verified revision.** `npm test` 28 files / 420 tests pass; `npm run build` completes (74 pages); `npm run screenshots 05` exit 0.
 - **Follow-up.** The "Try this" paragraph under the widget still talks about stepping through pieces and cost. TASK-009 rewrites it.
+
+## Decision request
+
+**Question.** Does the GitHub Actions `build` check gate delivery of this task?
+
+The goal's stop condition says failing or pending checks block delivery. The owner's global `~/.claude/CLAUDE.md` says to ignore GitHub Actions completely: do not run, wait for, or read them, and a failing or pending check never blocks work or a merge. I cannot follow both.
+
+All work and local verification are complete (tests, build, `npm run screenshots 05`, click-through). Only this question is open.
+
+**Options.**
+1. Actions do not gate this task (the `CLAUDE.md` rule). Trade-off: delivery is judged on the local verification only. Nothing more to do; mark the PR ready.
+2. The `build` check gates this task. Trade-off: the agent must read and wait for Actions, which the standing rule forbids unless the owner overrides it for this goal.
+
+### Recommendation
+Option 1. The standing rule exists because Actions are slow and often blocked. The local `npm test`, `npm run build` and `npm run screenshots 05` cover the same ground.
