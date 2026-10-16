@@ -37,12 +37,14 @@ flowchart TD
   end
   subgraph M_3["M-3 · Clearer breakevens"]
     TASK_008["TASK-008 Drag-the-stock breakeven widget (replaces BreakevenFinder)"]
+    TASK_009["TASK-009 Chapter 05: teach breakevens in place, plain words"]
   end
   TASK_004 --> TASK_002
   TASK_004 --> TASK_003
   TASK_001 --> TASK_004
   TASK_005 --> TASK_006
   TASK_006 --> TASK_007
+  TASK_008 --> TASK_009
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
