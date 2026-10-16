@@ -69,12 +69,15 @@ export default function BreakevenSlider() {
           fillOpacity={0}
         />
       ))}
-      {show && roots.map((r) => {
+      {show && roots.map((r, i) => {
+        // Label outward (a lone breakeven goes right), on the side of the zero line the profit line isn't.
+        const west = i * 2 < roots.length - 1;
         const rising = profit(r + 1) > profit(r - 1);
+        const below = rising !== west;
         return (
           <g key={r}>
             <Point x={r} y={0} color="var(--text)" />
-            <Label x={r} y={0} attach={rising ? 'se' : 'sw'} attachDistance={10} size={12} color="var(--text)">
+            <Label x={r} y={0} attach={`${below ? 's' : 'n'}${west ? 'w' : 'e'}`} attachDistance={10} size={12} color="var(--text)">
               {price(r)}
             </Label>
           </g>

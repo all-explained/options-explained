@@ -91,6 +91,8 @@ try {
       await widget.getByRole('radio', { name }).click();
       for (const l of labels) await widget.locator('svg text', { hasText: new RegExp('^' + l.replace('$', '\\$') + '$') }).waitFor();
       console.log(`[${viewport.width}px] ${name}: labels ${labels.join(' and ')}`);
+      const [l1, l2] = await Promise.all(labels.map((l) => widget.locator('svg text', { hasText: new RegExp('^' + l.replace('$', '\\$') + '$') }).boundingBox()));
+      assert.ok(l1.x + l1.width <= l2.x || l2.x + l2.width <= l1.x, `${name}: breakeven labels overlap`);
       for (const c of cross) {
         await dragTo(c);
         await say(`${name}, S_T = ${c}`);
