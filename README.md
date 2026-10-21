@@ -4,9 +4,9 @@
 
 Options become easier to understand when you can *see* how they work. Start with an intuitive example, explore what changes when you move a slider, and then discover the mathematics behind it. The course builds from first principles to graduate-level derivatives theory, without skipping the steps in between.
 
-**[Explore the interactive course →](https://jesusvillota.github.io/options-explained/)** · [Start with Chapter 1](https://jesusvillota.github.io/options-explained/chapters/01-what-is-an-option/)
+**[Explore the interactive course →](https://all-explained.github.io/options-explained/)** · [Start with Chapter 1](https://all-explained.github.io/options-explained/chapters/01-what-is-an-option/)
 
-[![Options, Explained: a preview using the website's actual call and put payoff artwork](public/course-preview.svg)](https://jesusvillota.github.io/options-explained/)
+[![Options, Explained: a preview using the website's actual call and put payoff artwork](public/course-preview.svg)](https://all-explained.github.io/options-explained/)
 
 ## Understand the *why*, not just the formula
 
@@ -21,24 +21,24 @@ The course contains **73 chapters in 16 progressively more advanced parts**: ten
 
 | Part | Explore |
 | --- | --- |
-| **I. What options are** | [Calls, puts, payoffs, moneyness, and option strategies](https://jesusvillota.github.io/options-explained/chapters/01-what-is-an-option/) |
-| **II. No-arbitrage reasoning** | [Forwards, pricing bounds, put–call parity, and early exercise](https://jesusvillota.github.io/options-explained/chapters/06-time-value-and-forwards/) |
-| **III. Pricing in discrete time** | [Replication, risk-neutral probabilities, and binomial trees](https://jesusvillota.github.io/options-explained/chapters/11-one-period-binomial/) |
-| **IV. Continuous time** | [Brownian motion, Itô's lemma, and Black–Scholes](https://jesusvillota.github.io/options-explained/chapters/15-brownian-motion/) |
-| **V. Greeks & hedging** | [Delta, gamma, theta, vega, and dynamic hedging](https://jesusvillota.github.io/options-explained/chapters/21-delta-gamma/) |
-| **VI. Volatility** | [Implied volatility, smiles and skew, volatility surfaces, and VIX](https://jesusvillota.github.io/options-explained/chapters/25-historical-implied-vol/) |
-| **VII. Beyond Black–Scholes** | [Local volatility, Heston, jumps, SABR, and rough volatility](https://jesusvillota.github.io/options-explained/chapters/29-local-volatility/) |
-| **VIII. Numerical methods** | [Monte Carlo, finite differences, Fourier pricing, and American options](https://jesusvillota.github.io/options-explained/chapters/33-monte-carlo/) |
-| **IX. Exotic & multi-asset options** | [Exotic payoffs, path dependence, and multi-asset derivatives](https://jesusvillota.github.io/options-explained/chapters/37-path-independent-exotics/) |
-| **X. Deep theory & applications** | [Martingale pricing, interest-rate options, credit, and real options](https://jesusvillota.github.io/options-explained/chapters/40-martingale-pricing/) |
-| **XI. Inside the options market** | [Order books, matching rules, auctions, clearing and margin, liquidity, and arbitrage with frictions](https://jesusvillota.github.io/options-explained/chapters/43-limit-order-book/) |
-| **XII. Information and price formation** | [Inventory, Glosten–Milgrom, Kyle's model, informed trading and price discovery](https://jesusvillota.github.io/options-explained/chapters/49-inventory/) |
-| **XIII. The options market maker** | [Building a surface from quotes, quoting, Avellaneda–Stoikov, book risk, hedging with costs, and demand-based pricing](https://jesusvillota.github.io/options-explained/chapters/55-noisy-quotes-surface/) |
-| **XIV. Price impact and optimal execution** | [The square-root law, Almgren–Chriss, transient impact, execution algorithms, and executing option trades](https://jesusvillota.github.io/options-explained/chapters/61-price-impact/) |
-| **XV. When hedging moves the market** | [Dealer gamma, pinning, zero-day options, and liquidity spirals](https://jesusvillota.github.io/options-explained/chapters/66-dealer-gamma/) |
-| **XVI. High-frequency microstructure** | [Hawkes processes, queues and the microprice, microstructure noise, and market design](https://jesusvillota.github.io/options-explained/chapters/70-hawkes/) |
+| **I. What options are** | [Calls, puts, payoffs, moneyness, and option strategies](https://all-explained.github.io/options-explained/chapters/01-what-is-an-option/) |
+| **II. No-arbitrage reasoning** | [Forwards, pricing bounds, put–call parity, and early exercise](https://all-explained.github.io/options-explained/chapters/06-time-value-and-forwards/) |
+| **III. Pricing in discrete time** | [Replication, risk-neutral probabilities, and binomial trees](https://all-explained.github.io/options-explained/chapters/11-one-period-binomial/) |
+| **IV. Continuous time** | [Brownian motion, Itô's lemma, and Black–Scholes](https://all-explained.github.io/options-explained/chapters/15-brownian-motion/) |
+| **V. Greeks & hedging** | [Delta, gamma, theta, vega, and dynamic hedging](https://all-explained.github.io/options-explained/chapters/21-delta-gamma/) |
+| **VI. Volatility** | [Implied volatility, smiles and skew, volatility surfaces, and VIX](https://all-explained.github.io/options-explained/chapters/25-historical-implied-vol/) |
+| **VII. Beyond Black–Scholes** | [Local volatility, Heston, jumps, SABR, and rough volatility](https://all-explained.github.io/options-explained/chapters/29-local-volatility/) |
+| **VIII. Numerical methods** | [Monte Carlo, finite differences, Fourier pricing, and American options](https://all-explained.github.io/options-explained/chapters/33-monte-carlo/) |
+| **IX. Exotic & multi-asset options** | [Exotic payoffs, path dependence, and multi-asset derivatives](https://all-explained.github.io/options-explained/chapters/37-path-independent-exotics/) |
+| **X. Deep theory & applications** | [Martingale pricing, interest-rate options, credit, and real options](https://all-explained.github.io/options-explained/chapters/40-martingale-pricing/) |
+| **XI. Inside the options market** | [Order books, matching rules, auctions, clearing and margin, liquidity, and arbitrage with frictions](https://all-explained.github.io/options-explained/chapters/43-limit-order-book/) |
+| **XII. Information and price formation** | [Inventory, Glosten–Milgrom, Kyle's model, informed trading and price discovery](https://all-explained.github.io/options-explained/chapters/49-inventory/) |
+| **XIII. The options market maker** | [Building a surface from quotes, quoting, Avellaneda–Stoikov, book risk, hedging with costs, and demand-based pricing](https://all-explained.github.io/options-explained/chapters/55-noisy-quotes-surface/) |
+| **XIV. Price impact and optimal execution** | [The square-root law, Almgren–Chriss, transient impact, execution algorithms, and executing option trades](https://all-explained.github.io/options-explained/chapters/61-price-impact/) |
+| **XV. When hedging moves the market** | [Dealer gamma, pinning, zero-day options, and liquidity spirals](https://all-explained.github.io/options-explained/chapters/66-dealer-gamma/) |
+| **XVI. High-frequency microstructure** | [Hawkes processes, queues and the microprice, microstructure noise, and market design](https://all-explained.github.io/options-explained/chapters/70-hawkes/) |
 
-[**Browse the full course →**](https://jesusvillota.github.io/options-explained/)
+[**Browse the full course →**](https://all-explained.github.io/options-explained/)
 
 ## Who is it for?
 
@@ -48,7 +48,7 @@ Whether you are **new to options**, studying **finance or economics**, or workin
 
 You don't need to install anything. Open the course in your browser, choose a chapter, and interact with the figures as you learn.
 
-**[Start learning Options, Explained →](https://jesusvillota.github.io/options-explained/)**
+**[Start learning Options, Explained →](https://all-explained.github.io/options-explained/)**
 
 ## License
 

@@ -31,7 +31,7 @@ jobs:
           path: dist
 
   deploy:
-    # Publishes to https://jesusvillota.github.io/options-explained/
+    # Publishes to https://all-explained.github.io/options-explained/
     # (requires Settings → Pages → Source: "GitHub Actions").
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: build

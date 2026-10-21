@@ -8,9 +8,9 @@ import rehypeKatex from 'rehype-katex';
 import { katexOptions } from './src/lib/katexMacros.ts';
 import rehypeMathPunctuation from './src/lib/rehypeMathPunctuation.mjs';
 
-// Deployed to GitHub Pages at https://jesusvillota.github.io/options-explained/
+// Deployed to GitHub Pages at https://all-explained.github.io/options-explained/
 export default defineConfig({
-  site: 'https://jesusvillota.github.io',
+  site: 'https://all-explained.github.io',
   base: '/options-explained',
   trailingSlash: 'always',
   integrations: [mdx(), react()],

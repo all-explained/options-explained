@@ -13,6 +13,6 @@ The **software**—including executable logic in MDX chapters, interactive widge
 
 You may share and adapt the CC BY 4.0 material, including commercially, provided you give appropriate credit, link to the license, and indicate whether you made changes. For example:
 
-> *Options, Explained* by Jesus Villota Miranda ([source](https://github.com/jesusvillota/options-explained)), licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Adapted from the original (if applicable).
+> *Options, Explained* by Jesus Villota Miranda ([source](https://github.com/all-explained/options-explained)), licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Adapted from the original (if applicable).
 
 The licenses above only apply to material for which the project's copyright holder(s) can grant these rights. Third-party libraries, fonts, quoted works, and other externally licensed material remain subject to their respective licenses and notices.

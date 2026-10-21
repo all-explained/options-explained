@@ -9,8 +9,8 @@ interface Props {
 }
 const { title, description = 'An interactive, visual course on financial options — from first principles to stochastic volatility.' } = Astro.props;
 const fullTitle = title === 'Options, Explained' ? title : `${title} · Options, Explained`;
-const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? 'https://jesusvillota.github.io').href;
-const previewImage = new URL(url('course-preview.svg'), Astro.site ?? 'https://jesusvillota.github.io').href;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? 'https://all-explained.github.io').href;
+const previewImage = new URL(url('course-preview.svg'), Astro.site ?? 'https://all-explained.github.io').href;
 ---
 <!doctype html>
 <html lang="en" data-theme="dark">
@@ -59,7 +59,7 @@ const previewImage = new URL(url('course-preview.svg'), Astro.site ?? 'https://j
       <span aria-hidden="true">·</span>
       <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Course content: CC BY 4.0</a>
       <span aria-hidden="true">·</span>
-      <a href="https://github.com/jesusvillota/options-explained/blob/main/LICENSE">Code: MIT</a>
+      <a href="https://github.com/all-explained/options-explained/blob/main/LICENSE">Code: MIT</a>
     </footer>
   </body>
 </html>
